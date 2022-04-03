@@ -130,3 +130,5 @@ dmypy.json
 
 mr_beast
 mr_beast_gaming
+*csv
+git rm --cached youtube-comments.csv

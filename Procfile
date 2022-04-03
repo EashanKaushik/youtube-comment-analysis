@@ -1,0 +1,1 @@
+web: gunicorn comment_analysis.wsgi

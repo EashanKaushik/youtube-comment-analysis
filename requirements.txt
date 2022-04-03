@@ -51,5 +51,5 @@ tqdm==4.63.1
 tzdata==2022.1
 uritemplate==4.1.1
 urllib3==1.26.9
-whitenoise==2.0.6
+whitenoise==6.0.0
 wincertstore==0.2

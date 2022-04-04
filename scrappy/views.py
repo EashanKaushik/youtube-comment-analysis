@@ -8,3 +8,9 @@ def url_entry(request):
         "page_name": "Scrap" 
     }
     return render(request, "scrappy/index.html", context)
+
+def order_request(request):
+    context={
+        "page_name": "Request"
+    }
+    return render(request, "scrappy/request.html", context)

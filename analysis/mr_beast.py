@@ -6,7 +6,7 @@ from apiclient.discovery import build
 
 environ.Env.read_env()
 
-youtube = build('youtube', 'v3', developerKey=os.environ[str(sys.argv[1])])
+youtube = build('youtube', 'v3', developerKey=os.environ[sys.argv[1]])
 
 import pandas as pd
 

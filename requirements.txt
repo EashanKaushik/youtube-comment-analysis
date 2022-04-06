@@ -1,4 +1,6 @@
 asgiref==3.5.0
+boto3==1.21.35
+botocore==1.24.35
 cachetools==5.0.0
 certifi==2021.10.8
 charset-normalizer==2.0.12
@@ -7,9 +9,10 @@ colorama==0.4.4
 configparser==5.2.0
 cycler==0.11.0
 dj-database-url==0.5.0
-Django==4.0.2
+Django==4.0.3
 django-environ==0.8.1
 django-heroku==0.3.1
+environ==1.0
 fonttools==4.31.2
 google-api-core==2.7.1
 google-api-python-client==2.42.0
@@ -20,6 +23,7 @@ googleapis-common-protos==1.56.0
 gunicorn==20.1.0
 httplib2==0.20.4
 idna==3.3
+jmespath==1.0.0
 joblib==1.1.0
 kiwisolver==1.4.2
 matplotlib==3.5.1
@@ -40,6 +44,7 @@ regex==2022.3.15
 requests==2.27.1
 requests-oauthlib==1.3.1
 rsa==4.8
+s3transfer==0.5.2
 scikit-learn==1.0.2
 scipy==1.8.0
 seaborn==0.11.2

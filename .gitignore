@@ -130,5 +130,8 @@ dmypy.json
 
 mr_beast
 mr_beast_gaming
-*csv
+*.csv
 git rm --cached youtube-comments.csv
+*.pem
+*.ppk
+youtube-comment-analysis-ec2-ohio

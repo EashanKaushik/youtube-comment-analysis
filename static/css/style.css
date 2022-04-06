@@ -1,18 +1,15 @@
-.my {
-    background-color: #B7CADB;
-}
-html {
-    background: url('/Users/srijanmalhotra/Desktop/youtube-comment-analysis/static/images.jpeg') no-repeat center center fixed;
-    background-size: cover;
+.back {
+    background-size: 1800px 900px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: fixed;
 }
 
-body {
-    background-color: inherit;
-}
 .full-width {
-    min-height: 100vh;
+    min-height: 90vh;
 }
+
 form {
     background-color: white;
-    box-shadow: 5px 5px 5px rgba(0,0,0,.2);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
 }

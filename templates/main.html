@@ -13,7 +13,17 @@
     <title>{{ page_name }}</title>
 </head>
 
-<body class="my">
+<body class="back" style="background-image: url('{% static "img/background.jpg"%}')";>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a href = "{% url 'scrappy:url_entry' %}" class="navbar-brand">YCA</a>
+            {% if page_name == 'Scrap' %}
+                <a href="{% url 'scrappy:order_request' %}"><button class="btn btn-outline-danger">Request ID</button></a>
+            {% else %}
+                <a href="{% url 'scrappy:url_entry' %}"><button class="btn btn-outline-danger">URL</button></a>
+            {% endif %}
+        </div>
+    </nav>
     {% block content %}
 
     {% endblock content %}

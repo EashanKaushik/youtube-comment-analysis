@@ -33,7 +33,6 @@ joblib==1.1.0
 kiwisolver==1.4.2
 langcodes==3.3.0
 matplotlib==3.5.1
-urmurhash==1.0.6
 nltk==3.7
 numpy==1.22.3
 oauthlib==3.2.0

@@ -115,6 +115,7 @@ stack-data @ file:///opt/conda/conda-bld/stack_data_1646927590127/work
 terminado @ file:///C:/ci/terminado_1644322780199/work
 testpath @ file:///tmp/build/80754af9/testpath_1624638946665/work
 thinc==8.0.15
+textblob==0.17.1
 threadpoolctl==3.1.0
 tornado @ file:///C:/ci/tornado_1606924294691/work
 tqdm==4.63.1

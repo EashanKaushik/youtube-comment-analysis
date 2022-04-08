@@ -5,15 +5,15 @@ def combine_all():
     final_df = None
     for current_dir in os.listdir('mr_beast'):
         if final_df is not None:
-            final_df = pd.concat([final_df, pd.read_csv(os.path.join('mr_beast', current_dir))])
+            final_df = pd.concat([final_df, pd.read_csv(os.path.join('mr_beast', current_dir), lineterminator='\n')])
         else:
-            final_df = pd.read_csv(os.path.join('mr_beast', current_dir))
+            final_df = pd.read_csv(os.path.join('mr_beast', current_dir), lineterminator='\n')
     
     for current_dir in os.listdir('mr_beast_gaming'):
         if final_df is not None:
-            final_df = pd.concat([final_df, pd.read_csv(os.path.join('mr_beast_gaming', current_dir))])
+            final_df = pd.concat([final_df, pd.read_csv(os.path.join('mr_beast_gaming', current_dir), lineterminator='\n')])
         else:
-            final_df = pd.read_csv(os.path.join('mr_beast_gaming', current_dir))
+            final_df = pd.read_csv(os.path.join('mr_beast_gaming', current_dir), lineterminator='\n')
     
     return final_df
 

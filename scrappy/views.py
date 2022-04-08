@@ -22,9 +22,11 @@ def url_entry(request):
         
         url_request.save()
         
-        trigger_lambda(request.POST.get("url"), url_request.request_display)
-        
-        messages.success(request, "Order Submitted!!")
+        try:
+            trigger_lambda(request.POST.get("url"), url_request.request_display)
+            messages.success(request, "Order Submitted!!")
+        except Exception:
+            messages.error(request, "Not a Valid URL!!")
         
         context={
             "page_name": "Scrap",
@@ -54,7 +56,10 @@ def order_request(request):
         except Exception:
             messages.error(request, "Request Pending!")
         
-        completed = Request.objects.get(request_display=request_id).completed        
+        try:
+            completed = Request.objects.get(request_display=request_id).completed
+        except Exception:
+            messages.error(request, "Not a Valid Request ID!")
         
         if completed:
             messages.success(request, "Data Scrapped!")

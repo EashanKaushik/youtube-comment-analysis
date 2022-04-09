@@ -136,3 +136,4 @@ git rm --cached youtube-comments.csv
 *.ppk
 youtube-comment-analysis-ec2-ohio
 *.model
+documentation

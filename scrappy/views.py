@@ -22,11 +22,10 @@ def url_entry(request):
         
         url_request.save()
         
-        try:
-            trigger_lambda(request.POST.get("url"), url_request.request_display)
-            messages.success(request, "Order Submitted!!")
-        except Exception:
-            messages.error(request, "Not a Valid URL!!")
+
+        trigger_lambda(request.POST.get("url"), url_request.request_display)
+        messages.success(request, "Order Submitted!!")
+
         
         context={
             "page_name": "Scrap",

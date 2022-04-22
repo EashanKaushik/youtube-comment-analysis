@@ -22,11 +22,14 @@
             {{message}}
           </div>
         {% elif message.tags == 'success' %}
-          <div class="alert alert-success my-2" role="alert">
-            {{message}}
-            <a href="{% url 'scrappy:analyze' %}">
-              <button type="button" class="btn btn-outline-light">Analyze Data</button>
-            </a>
+          <div class="alert alert-success my-2 text-center" role="alert">
+            <div class="mx-auto">
+              {{message}}
+              <br><br>
+              <a href="{% url 'scrappy:analyze' request_id %}">
+                <button type="button" class="btn btn-outline-danger">Analyze Data</button>
+              </a>
+            </div>
           </div>
         {% endif %}
       {% endfor %}

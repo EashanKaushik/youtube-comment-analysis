@@ -5,5 +5,5 @@ app_name = "scrappy"
 urlpatterns = [
     path("", views.url_entry, name="url_entry"),
     path("request/", views.order_request, name="order_request"),
-    path("analyze/", views.analyze, name="analyze"),
+    path("analyze/<str:request_display>", views.analyze, name="analyze"),
 ]

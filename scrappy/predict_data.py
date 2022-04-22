@@ -16,6 +16,8 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow import keras
 
+from comment_analysis.lambda_config import upload_data
+
 VOCAB = 102612
 EMBEDDINGS = 100
 MAXIMUM_LENTH = 2100
@@ -23,6 +25,7 @@ MAXIMUM_LENTH = 2100
 
 def analyze_data(request_id):
 
+    # try:
     data = read_data(request_id=request_id)
 
     X = clean_data(data)
@@ -30,6 +33,15 @@ def analyze_data(request_id):
     X_pad_tokens = get_tokens(X)
 
     y_labels = lstm_predict(X_pad_tokens)
+
+    upload_data(y_labels, request_id)
+
+    request = Request.objects.get(request_display=request_id)
+    request.analyze_completed = True
+    request.save()
+
+    # except Exception:
+    #     pass
 
     print(y_labels)
 

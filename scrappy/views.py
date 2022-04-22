@@ -2,13 +2,15 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
-from .models import Request
-from comment_analysis.lambda_config import update_request, trigger_lambda
-import secrets
 from django.contrib import messages
 
+from .models import Request
+from .driver import check_analyze
+
+from comment_analysis.lambda_config import update_request, trigger_lambda
 from .predict_data import analyze_data
+
+import secrets
 
 
 def url_entry(request):
@@ -21,7 +23,12 @@ def url_entry(request):
 
         url_request.save()
 
-        url_request.request_display = secrets.token_urlsafe(int(url_request.request_id))
+        request_id = secrets.token_urlsafe(int(url_request.request_id))
+
+        if len(str(request_id)) > 7:
+            request_id = request_id[0:6]
+
+        url_request.request_display = request_id
 
         url_request.save()
 
@@ -47,6 +54,7 @@ def order_request(request):
 
     completed = False
     post = False
+    request_id = None
 
     if request.method == "POST" and "submit" in request.POST:
 
@@ -63,8 +71,7 @@ def order_request(request):
             messages.error(request, "Not a Valid Request ID!")
 
         if completed:
-
-            analyze_data(request_id=request_id)
+            request_id = request.POST.get("request")
             messages.success(request, "Data Scrapped!")
 
         post = True
@@ -73,12 +80,18 @@ def order_request(request):
         "page_name": "Request",
         "completed": completed,
         "post": post,
+        "request_id": request_id,
     }
     return render(request, "scrappy/request.html", context)
 
 
-def analyze(request):
+def analyze(request, request_display):
+
     context = {
         "page_name": "Analyze",
     }
+
+    if not check_analyze(request_display):
+        analyze_data(request_id=request_display)
+
     return render(request, "scrappy/analyze.html", context)

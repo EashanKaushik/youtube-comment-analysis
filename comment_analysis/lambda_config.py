@@ -2,6 +2,7 @@ import boto3
 import os
 import environ
 import json
+from io import StringIO
 
 from scrappy.models import Request
 
@@ -67,3 +68,53 @@ def update_request(request_id):
         url_request.save()
     else:
         raise Exception()
+
+
+def upload_data(dataset, request_id):
+    # Creating Session With Boto3.
+    session = boto3.Session(
+        aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
+        aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
+    )
+
+    # Creating S3 Resource From the Session.
+    s3_res = session.resource("s3")
+
+    csv_buffer = StringIO()
+
+    dataset.to_csv(csv_buffer)
+
+    bucket_name = os.environ["AWS_PUBLIC_BUCKET"]
+
+    s3_object_name = f"{request_id}.csv"
+
+    s3_res.Object(bucket_name, s3_object_name).put(Body=csv_buffer.getvalue())
+
+    print("Dataframe is saved as CSV in S3 bucket.")
+
+
+def check_s3_analyze(request_id):
+
+    try:
+        s3_client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
+            aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
+        )
+
+        url = Request.objects.get(request_display=request_id).url
+
+        url_request = Request.objects.get(request_display=request_id)
+
+        response = s3_client.get_object(
+            Bucket=os.environ["AWS_PUBLIC_BUCKET"], Key=f"{request_id}.csv"
+        )
+
+        status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
+
+        if status == 200:
+            return True
+        else:
+            return False
+    except Exception:
+        return False

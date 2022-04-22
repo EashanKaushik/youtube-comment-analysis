@@ -85,13 +85,24 @@ def order_request(request):
     return render(request, "scrappy/request.html", context)
 
 
-def analyze(request, request_display):
+def loading(request, request_display):
+
+    loading_page = False
 
     context = {
         "page_name": "Analyze",
+        "loading_page": loading_page,
+        "request_id": request_display,
     }
+    return render(request, "scrappy/loading.html", context)
+
+
+def analyze(request, request_display):
 
     if not check_analyze(request_display):
         analyze_data(request_id=request_display)
 
+    context = {
+        "page_name": "Analyze",
+    }
     return render(request, "scrappy/analyze.html", context)

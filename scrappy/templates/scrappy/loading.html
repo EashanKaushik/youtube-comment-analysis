@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/loading_style.css' %}" />
+{% endblock staticfiles %}
+
+{% block content %}
+
+<div id="loader-wrapper">
+    
+    
+    <div class="loader-section section-left">
+        <div class="container-fluid my-5 mx-0 p-0">
+            <div class="row">
+                <div class="col">
+                    <form method="POST" action="" style="background-color:#222222">
+                        <button type="submit" class="btn btn-dark text-dark mx-auto" style="background-color:#222222">
+                            H
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loader-section section-right">
+        <div class="container-fluid my-5 mx-0 p-0">
+            <div class="row">
+                <div class="col">
+                    <form method="POST" action="" style="background-color:#222222">
+                        {% csrf_token %}
+                        <a href="{% url 'scrappy:analyze' request_id %}">
+                            <button type="button" class="btn btn-danger mx-auto">Analyze Data</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="loader">
+        
+    </div>
+
+    </div>
+
+{% endblock content %}

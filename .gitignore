@@ -131,11 +131,11 @@ dmypy.json
 mr_beast
 mr_beast_gaming
 *.csv
-git rm --cached youtube-comments.csv
 *.pem
 *.ppk
 youtube-comment-analysis-ec2-ohio
 *.model
-LSTM/
 models/
 documentation
+analysis/
+LSTM/

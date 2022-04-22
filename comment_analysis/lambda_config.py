@@ -8,6 +8,7 @@ from scrappy.models import Request
 
 import pandas as pd
 
+
 def trigger_lambda(url, request_id):
     environ.Env.read_env()
 
@@ -118,6 +119,7 @@ def check_s3_analyze(request_id):
     except Exception:
         return False
 
+
 def read_analyzed_data(request_id):
     s3_client = boto3.client(
         "s3",
@@ -140,6 +142,7 @@ def read_analyzed_data(request_id):
 
     # print(dataframe)
     return dataframe
+
 
 def read_dataset(request_id):
     s3_client = boto3.client(

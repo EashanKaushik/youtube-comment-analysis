@@ -8,68 +8,77 @@ from comment_analysis.lambda_config import update_request, trigger_lambda
 import secrets
 from django.contrib import messages
 
+from .predict_data import analyze_data
+
+
 def url_entry(request):
-    
-    if request.method == 'POST' and 'submit' in request.POST:
-        
+
+    if request.method == "POST" and "submit" in request.POST:
+
         url_request = Request()
-        
+
         url_request.url = request.POST.get("url")
-        
+
         url_request.save()
-        
+
         url_request.request_display = secrets.token_urlsafe(int(url_request.request_id))
-        
+
         url_request.save()
-        
 
         trigger_lambda(request.POST.get("url"), url_request.request_display)
         messages.success(request, "Order Submitted!!")
 
-        
-        context={
+        context = {
             "page_name": "Scrap",
             "url_sent": True,
             "request_id": url_request.request_display,
         }
-        
+
         return render(request, "scrappy/index.html", context)
-        
-    context={
+
+    context = {
         "page_name": "Scrap",
         "url_sent": False,
     }
     return render(request, "scrappy/index.html", context)
 
+
 def order_request(request):
-    
+
     completed = False
     post = False
-    
-    if request.method == 'POST' and 'submit' in request.POST:
-        
+
+    if request.method == "POST" and "submit" in request.POST:
+
         request_id = request.POST.get("request")
-        
-        try: 
+
+        try:
             update_request(request_id)
         except Exception:
             messages.error(request, "Request Pending!")
-        
+
         try:
             completed = Request.objects.get(request_display=request_id).completed
         except Exception:
             messages.error(request, "Not a Valid Request ID!")
-        
+
         if completed:
+
+            analyze_data(request_id=request_id)
             messages.success(request, "Data Scrapped!")
-        
+
         post = True
-        
-        
-    
-    context={
+
+    context = {
         "page_name": "Request",
         "completed": completed,
         "post": post,
     }
     return render(request, "scrappy/request.html", context)
+
+
+def analyze(request):
+    context = {
+        "page_name": "Analyze",
+    }
+    return render(request, "scrappy/analyze.html", context)

@@ -11,12 +11,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <title>{{ page_name }}</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png'%}" sizes="64x64">
 </head>
 
-<body class="back" style="background-image: url('{% static "img/background.jpg"%}')";>
+{% if page_name == 'Analyze' %}
+    <body class="yca-background-secondary">
+{% else %}
+    <body class="yca-background">
+{% endif %}
     <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <a href = "{% url 'scrappy:url_entry' %}" class="navbar-brand">YCA</a>
+        <div class="container">
+            <a class="navbar-brand text-danger fw-bolder fs-1" href="{% url 'scrappy:url_entry' %}">
+                <img src="{% static "img/favicon.png"%}" alt="" width="50" height="50"> YCA
+                {% comment %} <a href = "{% url 'scrappy:url_entry' %}" class="navbar-brand">YCA</a> {% endcomment %}
+            </a>
             {% if page_name == 'Scrap' %}
                 <a href="{% url 'scrappy:order_request' %}"><button class="btn btn-outline-danger">Request ID</button></a>
             {% else %}

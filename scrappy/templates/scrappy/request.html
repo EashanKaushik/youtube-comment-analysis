@@ -24,6 +24,9 @@
         {% elif message.tags == 'success' %}
           <div class="alert alert-success my-2" role="alert">
             {{message}}
+            <a href="{% url 'scrappy:analyze' %}">
+              <button type="button" class="btn btn-outline-light">Analyze Data</button>
+            </a>
           </div>
         {% endif %}
       {% endfor %}

@@ -7,16 +7,15 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Request',
+            name="Request",
             fields=[
-                ('request_id', models.AutoField(primary_key=True, serialize=False)),
-                ('request_display', models.CharField(max_length=100)),
-                ('url', models.CharField(max_length=100)),
+                ("request_id", models.AutoField(primary_key=True, serialize=False)),
+                ("request_display", models.CharField(max_length=100)),
+                ("url", models.CharField(max_length=100)),
             ],
         ),
     ]

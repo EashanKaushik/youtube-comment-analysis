@@ -1,8 +1,17 @@
-.back {
-    background-size: 1800px 900px;
+.yca-background {
+    background-size: auto;
     background-repeat: no-repeat;
     background-position: top;
     background-attachment: fixed;
+    background-color: rgb(219, 97, 97);
+}
+
+.yca-background-secondary {
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: fixed;
+    background-color: rgb(255, 255, 255);
 }
 
 .full-width {

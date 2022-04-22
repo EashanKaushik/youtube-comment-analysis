@@ -6,4 +6,3 @@ class Request(models.Model):
     request_display = models.CharField(max_length=100, null=True, blank=True)
     url = models.CharField(max_length=100)
     completed = models.BooleanField(default=False)
-

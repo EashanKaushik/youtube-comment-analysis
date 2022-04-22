@@ -7,7 +7,7 @@ from django.contrib import messages
 from .models import Request
 from .driver import check_analyze
 
-from comment_analysis.lambda_config import update_request, trigger_lambda
+from comment_analysis.lambda_config import update_request, trigger_lambda, read_analyzed_data, read_dataset
 from .predict_data import analyze_data
 
 import secrets
@@ -101,8 +101,30 @@ def analyze(request, request_display):
 
     if not check_analyze(request_display):
         analyze_data(request_id=request_display)
-
+    
+    try: 
+        data = read_analyzed_data(request_id=request_display)
+        positive = data[data.Sentiment == 'Positive']
+        negative = data[data.Sentiment == 'Negative']
+        neutral = data[data.Sentiment == 'Neutral']
+        
+        positive_number = len(positive.index)
+        negative_number = len(negative.index)
+        neutral_number = len(neutral.index)
+        
+        positive = (positive_number / (positive_number + negative_number + neutral_number)) * 100
+        negative = (negative_number / (positive_number + negative_number + neutral_number)) * 100
+        neutral = (neutral_number / (positive_number + negative_number + neutral_number)) * 100
+        
+        
+    
+    except Exception:
+        messages.error(request, "Can't be Analyzed")
+        
     context = {
         "page_name": "Analyze",
+        "positive": positive,
+        "negative":negative,
+        "neutral": neutral,
     }
     return render(request, "scrappy/analyze.html", context)

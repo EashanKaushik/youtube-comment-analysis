@@ -1,6 +1,40 @@
 {% extends 'main.html' %}
 
+{% load static %}
+
+{% block scriptone %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script
+    
+{% endblock scriptone %}
+
+{% block staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/analyze_style.css' %}" />
+{% endblock staticfiles %}
+
 {% block content %}
-Hello
+
+<figure class="highcharts-figure">
+  <div id="sentiment" class="m-5"></div>
+</figure>
 
 {% endblock content %}
+
+{% block scripttwo %}
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+         <script>
+            _positve = {{ positive | safe }};
+            _negative = {{ negative | safe }};
+            _neutral = {{ neutral | safe }};
+        </script>
+        <script src="{% static 'js/analyze_style.js' %}"></script>
+{% endblock scripttwo %}

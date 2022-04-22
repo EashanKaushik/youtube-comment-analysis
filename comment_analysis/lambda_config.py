@@ -6,6 +6,7 @@ from io import StringIO
 
 from scrappy.models import Request
 
+import pandas as pd
 
 def trigger_lambda(url, request_id):
     environ.Env.read_env()
@@ -90,8 +91,6 @@ def upload_data(dataset, request_id):
 
     s3_res.Object(bucket_name, s3_object_name).put(Body=csv_buffer.getvalue())
 
-    print("Dataframe is saved as CSV in S3 bucket.")
-
 
 def check_s3_analyze(request_id):
 
@@ -118,3 +117,49 @@ def check_s3_analyze(request_id):
             return False
     except Exception:
         return False
+
+def read_analyzed_data(request_id):
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
+        aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
+    )
+
+    url = Request.objects.get(request_display=request_id).url
+
+    response = s3_client.get_object(
+        Bucket=os.environ["AWS_PUBLIC_BUCKET"], Key=f"{request_id}.csv"
+    )
+
+    status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
+
+    if status == 200:
+        dataframe = pd.read_csv(response.get("Body"))
+    else:
+        raise Exception("No bucket")
+
+    # print(dataframe)
+    return dataframe
+
+def read_dataset(request_id):
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
+        aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
+    )
+
+    url = Request.objects.get(request_display=request_id).url
+
+    response = s3_client.get_object(
+        Bucket=os.environ["AWS_S3_BUCKET"], Key="comment_data/" + url + ".csv"
+    )
+
+    status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
+
+    if status == 200:
+        dataframe = pd.read_csv(response.get("Body"))
+    else:
+        raise Exception("No bucket")
+
+    # print(dataframe)
+    return dataframe

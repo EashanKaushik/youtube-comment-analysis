@@ -137,5 +137,4 @@ youtube-comment-analysis-ec2-ohio
 *.model
 models/
 documentation
-analysis/
 LSTM/

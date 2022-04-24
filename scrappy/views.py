@@ -11,7 +11,6 @@ from comment_analysis.lambda_config import (
     update_request,
     trigger_lambda,
     read_analyzed_data,
-    read_dataset,
 )
 from .predict_data import analyze_data
 

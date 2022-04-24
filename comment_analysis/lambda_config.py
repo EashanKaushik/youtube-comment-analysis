@@ -8,6 +8,10 @@ from scrappy.models import Request
 
 import pandas as pd
 
+import pickle
+import joblib
+from tensorflow import keras
+
 
 def trigger_lambda(url, request_id):
     environ.Env.read_env()
@@ -144,25 +148,18 @@ def read_analyzed_data(request_id):
     return dataframe
 
 
-def read_dataset(request_id):
-    s3_client = boto3.client(
-        "s3",
-        aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
-        aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
-    )
+def get_lstm_model(file_name):
+    lstm = keras.models.load_model("scrappy/LSTM/model_lstm.h5")
+    print('Got Tokenize')
+    return lstm
 
-    url = Request.objects.get(request_display=request_id).url
+def get_encoder(file_name):
+    encoder = joblib.load("scrappy/LSTM/labelEncoder.joblib")
+    print('Got Encoder')
+    return encoder
 
-    response = s3_client.get_object(
-        Bucket=os.environ["AWS_S3_BUCKET"], Key="comment_data/" + url + ".csv"
-    )
-
-    status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
-
-    if status == 200:
-        dataframe = pd.read_csv(response.get("Body"))
-    else:
-        raise Exception("No bucket")
-
-    # print(dataframe)
-    return dataframe
+def get_tokenizer(file_name):
+    with open("scrappy/LSTM/tokenizer.pickle", "rb") as handle:
+        tokenizer = pickle.load(handle)
+    print('Got tokenizer')
+    return tokenizer

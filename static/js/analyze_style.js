@@ -20,7 +20,7 @@ Highcharts.chart('sentiment', {
     },
     yAxis: {
         title: {
-            text: 'Total percent market share'
+            text: 'Total percent comment sentiment'
         }
 
     },
@@ -49,18 +49,15 @@ Highcharts.chart('sentiment', {
             data: [
                 {
                     name: "Positive",
-                    y: _positve,
-                    drilldown: "Positive"
+                    y: _positve
                 },
                 {
                     name: "Neutral",
-                    y: _neutral,
-                    drilldown: "Neutral"
+                    y: _neutral
                 },
                 {
                     name: "Negative",
-                    y: _negative,
-                    drilldown: "Negative"
+                    y: _negative
                 },
             ]
         }

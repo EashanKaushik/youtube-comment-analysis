@@ -12,6 +12,9 @@ import nltk
 import pickle
 import joblib
 
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow import keras

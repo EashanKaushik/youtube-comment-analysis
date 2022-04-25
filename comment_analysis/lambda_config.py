@@ -180,7 +180,7 @@ def get_lstm_model(model_name):
 
 
 def get_encoder(file_name):
-    encoder = joblib.load("scrappy/LSTM/labelEncoder.joblib")
+    encoder = joblib.load("scrappy/labelEncoder.joblib")
     print("Got Encoder")
     return encoder
 

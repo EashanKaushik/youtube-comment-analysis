@@ -1,1 +1,1 @@
-web: gunicorn comment_analysis.wsgi
+web: gunicorn comment_analysis.wsgi --timeout 800

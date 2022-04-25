@@ -69,7 +69,7 @@ def read_data(request_id):
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
     if status == 200:
-        dataframe = pd.read_csv(response.get("Body"))
+        dataframe = pd.read_csv(response.get("Body"), lineterminator="\n")
     else:
         raise Exception("No bucket")
 

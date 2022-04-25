@@ -150,16 +150,22 @@ def read_analyzed_data(request_id):
     # print(dataframe)
     return dataframe
 
+
 def get_s3fs():
-    return s3fs.S3FileSystem(key=os.environ["AWS_ACCESS_KEY_ID"], 
-                             secret=os.environ["AWS_SECRET_ACCESS_KEY"])
+    return s3fs.S3FileSystem(
+        key=os.environ["AWS_ACCESS_KEY_ID"], secret=os.environ["AWS_SECRET_ACCESS_KEY"]
+    )
+
 
 def get_lstm_model(model_name):
     with tempfile.TemporaryDirectory() as tempdir:
         print(tempdir)
         s3fs = get_s3fs()
         # Fetch and save the zip file to the temporary directory
-        s3fs.get(f"{os.environ['AWS_PUBLIC_BUCKET']}/{model_name}.zip", f"{tempdir}/{model_name}.zip")
+        s3fs.get(
+            f"{os.environ['AWS_PUBLIC_BUCKET']}/{model_name}.zip",
+            f"{tempdir}/{model_name}.zip",
+        )
         # Extract the model zip file within the temporary directory
         with zipfile.ZipFile(f"{tempdir}/{model_name}.zip") as zip_ref:
             zip_ref.extractall(f"{tempdir}/{model_name}")
@@ -173,14 +179,28 @@ def get_lstm_model(model_name):
     # return lstm
 
 
-
 def get_encoder(file_name):
     encoder = joblib.load("scrappy/LSTM/labelEncoder.joblib")
-    print('Got Encoder')
+    print("Got Encoder")
     return encoder
 
-def get_tokenizer(file_name):
-    with open("scrappy/LSTM/tokenizer.pickle", "rb") as handle:
-        tokenizer = pickle.load(handle)
-    print('Got tokenizer')
-    return tokenizer
+
+def get_tokenizer(model_name):
+
+    with tempfile.TemporaryDirectory() as tempdir:
+        print(tempdir)
+        s3fs = get_s3fs()
+        # Fetch and save the zip file to the temporary directory
+        s3fs.get(
+            f"{os.environ['AWS_PUBLIC_BUCKET']}/{model_name}.zip",
+            f"{tempdir}/{model_name}.zip",
+        )
+        # Extract the model zip file within the temporary directory
+        with zipfile.ZipFile(f"{tempdir}/{model_name}.zip") as zip_ref:
+            zip_ref.extractall(f"{tempdir}/{model_name}")
+        # Load the keras model from the temporary directory
+        print(os.path.isdir(f"{tempdir}/{model_name}"))
+        print(os.listdir(f"{tempdir}/{model_name}"))
+        # return keras.models.load_model(f"{tempdir}/{model_name}/{model_name}.pickle")
+        with open(f"{tempdir}/{model_name}/{model_name}.pickle", "rb") as handle:
+            return pickle.load(handle)

@@ -45,10 +45,17 @@ def combine_category(mr_beast=False, mr_beast_gaming=False):
         for current_dir in os.listdir("mr_beast"):
             if mr_beast_df is not None:
                 mr_beast_df = pd.concat(
-                    [mr_beast_df, pd.read_csv(os.path.join("mr_beast", current_dir), lineterminator='\n')]
+                    [
+                        mr_beast_df,
+                        pd.read_csv(
+                            os.path.join("mr_beast", current_dir), lineterminator="\n"
+                        ),
+                    ]
                 )
             else:
-                mr_beast_df = pd.read_csv(os.path.join("mr_beast", current_dir), lineterminator='\n')
+                mr_beast_df = pd.read_csv(
+                    os.path.join("mr_beast", current_dir), lineterminator="\n"
+                )
 
         return mr_beast_df
 
@@ -60,12 +67,15 @@ def combine_category(mr_beast=False, mr_beast_gaming=False):
                 mr_beast_gaming_df = pd.concat(
                     [
                         mr_beast_gaming_df,
-                        pd.read_csv(os.path.join("mr_beast_gaming", current_dir), lineterminator='\n'),
+                        pd.read_csv(
+                            os.path.join("mr_beast_gaming", current_dir),
+                            lineterminator="\n",
+                        ),
                     ]
                 )
             else:
                 mr_beast_gaming_df = pd.read_csv(
-                    os.path.join("mr_beast_gaming", current_dir), lineterminator='\n'
+                    os.path.join("mr_beast_gaming", current_dir), lineterminator="\n"
                 )
 
         return mr_beast_gaming_df

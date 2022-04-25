@@ -138,7 +138,7 @@ def lstm_predict(X_pad_tokens):
     # lstm = keras.models.load_model("scrappy/LSTM/model_lstm.h5")
     # encoder = joblib.load("scrappy/LSTM/labelEncoder.joblib")
     
-    lstm = get_lstm_model("model_lstm.h5")
+    lstm = get_lstm_model("model_lstm")
     encoder = get_encoder("labelEncoder.joblib")
     
     y_predictions = lstm.predict(X_pad_tokens)

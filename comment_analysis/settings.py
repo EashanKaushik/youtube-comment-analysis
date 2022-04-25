@@ -83,10 +83,10 @@ WSGI_APPLICATION = "comment_analysis.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "dceeobkd2otgoc",
-        "USER": "vmjzbnxvtqxkqn",
+        "NAME": "d3mj49c11qt9ko",
+        "USER": "tfkstctqgwjcnl",
         "PASSWORD": os.environ["DATABASES_PASSWORD"],
-        "HOST": "ec2-52-5-110-35.compute-1.amazonaws.com",
+        "HOST": "ec2-3-218-171-44.compute-1.amazonaws.com",
         "PORT": "5432",
     }
 }

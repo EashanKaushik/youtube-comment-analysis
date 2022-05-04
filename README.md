@@ -1,7 +1,8 @@
 # Youtube Comment Analysis(YCA) using Vader and LSTM
 
 ## Demo Video
-[![Watch the video](https://img.youtube.com/vi/BNPqXxj8aqg/maxresdefault.jpg)](https://youtu.be/BNPqXxj8aqg)
+
+[![Watch the video](https://user-images.githubusercontent.com/50113394/166615655-04172008-e0f0-420b-b117-c8b4ff5691d7.png)](https://youtu.be/BNPqXxj8aqg)
 
 ## Introduction
 

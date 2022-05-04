@@ -45,7 +45,7 @@ def lambda_handler(event, context):
     # commands = ["ls", "mkdir trial-hello", "python3 build/ec2trial.py ec2"]
 
     url_code = event.get("url")
-    API_KEY = "AIzaSyBDxsT_4J155fDCsY8zlOkjvxaosXa43ts"
+    API_KEY = "your-api-key" # your api key
 
     command_1 = "python3 build/scrape_code.py " + url_code + " " + API_KEY
     command_2 = "cd build"

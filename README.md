@@ -68,3 +68,49 @@ This application was developed using Django Python Framework. The data is stored
 The application demo can be seen here: [Demo](https://www.youtube.com/watch?v=BNPqXxj8aqg). This demo is on local server, as due to the large size of the files required, heroku is not able to support the application. However, this application can be easily replicated. Steps to replicate are given in readme.md file of GitHub repository. Moreover, since we are using paid technologies like AWS and Youtube API, we did not make this application publicly available.
 
 ## Steps to Replicate
+
+1. Clone github repository 
+    
+        git clone https://github.com/EashanKaushik/youtube-comment-analysis.git
+        
+2. Install requirements.txt
+
+        pip install -r requirements.txt
+ 
+3. Setup AWS Buckets, create two buckets one with public access and one with private access. 
+
+4. Setup a Ec2 instance in the same region as the two buckets, make sure you have IAM role attached to EC2 giving access to s3. ssh into your bucket and run following series of commands: 
+
+        sudo apt-get update
+        sudo apt-get install python3-pip
+        mkdir -p build/python/lib/python/3.8/site-packages
+        pip3 install paramiko -t system build/python/lib/python/3.8/site-packages
+        cd build
+        sudo apt install zip
+        zip -r packageParamiko.zip
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+        aws s3 cp packageParamiko.zip s3://private-bucket-name # packageParamiko
+        
+5. Create a lambda instance in the same region as both buckets and EC2 instance, add a layer with Paramiko package which is stored in S3. Paste [this](https://github.com/EashanKaushik/youtube-comment-analysis/blob/main/analysis/data-scrapping/lambda.py) code in your lambda instance. Make sure you have IAM role with full access to S3 and EC2, basic lambda role. 
+
+6. Make a YouTube API key from google developers console and paste this key in line #48 of your lambda function. 
+
+7. create a .env file in comment_analysis folder with following contents
+
+        SECRET_KEY='your-django-project-key'
+        DATABASES_PASSWORD='heroku-database-password'
+        AWS_ACCESS_KEY_ID='aws-access-key'
+        AWS_SECRET_ACCESS_KEY='aws-secret-access-key'
+        AWS_S3_BUCKET='private-bucket-name'
+        AWS_PUBLIC_BUCKET='public-bucket-name'
+ 
+8. Make django migrations to Database of your choice, we have used Heroku add on PostGre Database. 
+
+        python manage.py makemigrations
+        python manage.py migrate
+
+10. Start your server and make requests. 
+        
+        python manage.py runserver

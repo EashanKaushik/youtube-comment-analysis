@@ -77,9 +77,11 @@ The application demo can be seen here: [Demo](https://www.youtube.com/watch?v=BN
 
         pip install -r requirements.txt
  
-3. Setup AWS Buckets, create two buckets one with public access and one with private access. 
+3. Setup AWS Buckets, create two S3 buckets, one with public access and, one with private access. 
 
-4. Setup a Ec2 instance in the same region as the two buckets, make sure you have IAM role attached to EC2 giving access to s3. ssh into your bucket and run following series of commands: 
+4. Download the [tokenizer](https://yca-analytics.s3.us-east-2.amazonaws.com/tokenizer.zip), [labelEncoder](https://yca-analytics.s3.us-east-2.amazonaws.com/labelEncoder.joblib), [LSTM model](https://yca-analytics.s3.us-east-2.amazonaws.com/model_lstm.zip), and [LSTM weights](https://yca-analytics.s3.us-east-2.amazonaws.com/model_lstm_weights.h5) and store these files into the public S3 bucket. 
+
+5. Setup a Ec2 instance in the same region as the two buckets, make sure you have IAM role attached to EC2 giving access to s3. ssh into your bucket and run following series of commands: 
 
         sudo apt-get update
         sudo apt-get install python3-pip
@@ -91,13 +93,13 @@ The application demo can be seen here: [Demo](https://www.youtube.com/watch?v=BN
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
         unzip awscliv2.zip
         sudo ./aws/install
-        aws s3 cp packageParamiko.zip s3://private-bucket-name # packageParamiko
+        aws s3 cp packageParamiko.zip s3://private-bucket-name # to store packageParamiko.zip to S3 bucket
         
-5. Create a lambda instance in the same region as both buckets and EC2 instance, add a layer with Paramiko package which is stored in S3. Paste [this](https://github.com/EashanKaushik/youtube-comment-analysis/blob/main/analysis/data-scrapping/lambda.py) code in your lambda instance. Make sure you have IAM role with full access to S3 and EC2, basic lambda role. 
+6. Create a lambda instance in the same region as both buckets and EC2 instance, add a layer with Paramiko package which is stored in S3. Paste [this](https://github.com/EashanKaushik/youtube-comment-analysis/blob/main/analysis/data-scrapping/lambda.py) code in your lambda instance. Make sure you have IAM role with full access to S3 and EC2, basic lambda role. 
 
-6. Make a YouTube API key from google developers console and paste this key in line #48 of your lambda function. 
+7. Make a YouTube API key from google developers console and paste this key in line #48 of your lambda function. 
 
-7. create a .env file in comment_analysis folder with following contents
+8. create a .env file in comment_analysis folder with following contents
 
         SECRET_KEY='your-django-project-key'
         DATABASES_PASSWORD='heroku-database-password'
@@ -106,7 +108,7 @@ The application demo can be seen here: [Demo](https://www.youtube.com/watch?v=BN
         AWS_S3_BUCKET='private-bucket-name'
         AWS_PUBLIC_BUCKET='public-bucket-name'
  
-8. Make django migrations to Database of your choice, we have used Heroku add on PostGre Database. 
+9. Make django migrations to Database of your choice, we have used Heroku add on PostGre Database. 
 
         python manage.py makemigrations
         python manage.py migrate
